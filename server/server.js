@@ -38,7 +38,14 @@ if (supabaseUrl && supabaseKey) {
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('dist'));
+
+// Serve static files from dist directory if it exists
+const distPath = path.join(__dirname, '../dist');
+try {
+  app.use(express.static(distPath));
+} catch (error) {
+  console.warn('⚠️  dist directory not found. Run "npm run build" to create it.');
+}
 
 // Multer configuration for file uploads
 const storage = multer.memoryStorage();
@@ -384,7 +391,15 @@ app.get('/api/job-openings', async (req, res) => {
 
 // Serve React app for all other routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
+  const indexPath = path.join(__dirname, '../dist/index.html');
+  try {
+    res.sendFile(indexPath);
+  } catch (error) {
+    res.status(404).json({ 
+      error: 'Application not built. Please run "npm run build" first.',
+      message: 'The React application needs to be built before the server can serve it.'
+    });
+  }
 });
 
 // Error handling middleware
