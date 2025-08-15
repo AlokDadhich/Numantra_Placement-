@@ -1,9 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'your-supabase-url';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-supabase-anon-key';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Only create Supabase client if valid credentials are provided
+export const supabase = (supabaseUrl && supabaseKey && 
+  supabaseUrl !== 'your-supabase-url' && 
+  supabaseKey !== 'your-supabase-anon-key') 
+  ? createClient(supabaseUrl, supabaseKey) 
+  : null;
+
+// Log configuration status
+if (!supabase) {
+  console.warn('⚠️ Supabase client not initialized. Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file');
+}
 
 // Helper function to ensure bucket exists
 const ensureBucketExists = async () => {
