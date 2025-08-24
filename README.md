@@ -125,14 +125,11 @@ mailhog
 4. Upload PDF resume (max 5MB)
 5. Submit and receive confirmation
 
-### Admin Access
-1. Navigate to `http://localhost:5555/admin`
-2. Login credentials:
-   - Username: `admin`
-   - Password: `numantra123`
+###  Access
+1. Navigate to `http://localhost:5555/`
 3. Access student submissions and job management
 
-### Admin Features
+###  Features
 - **Submissions Tab**: View all student registrations, download Excel, access resumes
 - **Job Openings Tab**: Create/edit/delete job openings
 - **Excel Export**: Download Master.xlsx with all biodata
